@@ -1,10 +1,11 @@
 class Paciente {
- const aparatosRutina = []
+  const aparatosRutina = []
   const property edad
   var property fortaleza
   var property dolor
 
   method puedeHacerLaRutina() = aparatosRutina.all({aparato => aparato.puedeSerUsado(self)})
+  method cantidadDeAparatos() = aparatosRutina.size()
 
   method usar(unAparato) {
     if(unAparato.puedeSerUsado(self)) unAparato.esUsadoPor(self)
@@ -25,7 +26,38 @@ class Paciente {
   }
 }
 
+class Resistente inherits Paciente {
+  override method realizarSesionCompleta() {
+    super()
+    fortaleza += self.cantidadDeAparatos()
+  }
+}
+
+class Caprichoso inherits Paciente {
+
+  override method puedeHacerLaRutina() = super() and aparatosRutina.any({a => a.color() == "rojo"})
+  override method realizarSesionCompleta() {
+    super()
+    super()
+  }
+}
+
+class RapidaRecuperacion inherits Paciente {
+
+
+  override method realizarSesionCompleta() {
+    super()
+    dolor -= rapidosDeRecuperacion.cantidadConfigurable()
+  }
+}
+
+object rapidosDeRecuperacion {
+  var property cantidadConfigurable = 0
+}
+
 class Magneto {
+  var property color = "blanco"
+
   method puedeSerUsado(unPaciente) = true
 
   method esUsadoPor(unPaciente) {
@@ -34,6 +66,8 @@ class Magneto {
 }
 
 class Bicicleta {
+  var property color = "blanco"
+
   method puedeSerUsado(unPaciente) = unPaciente.edad() > 8
 
   method esUsadoPor(unPaciente) {
@@ -43,6 +77,7 @@ class Bicicleta {
 }
 
 class Minitramp {
+  var property color = "blanco"
   method puedeSerUsado(unPaciente) = 20 > unPaciente.dolor()
 
   method esUsadoPor(unPaciente) {
