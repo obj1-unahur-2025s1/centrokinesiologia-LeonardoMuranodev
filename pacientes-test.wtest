@@ -73,3 +73,54 @@ describe "Test de la parte 2" {
     assert.equals(30, leonardo.fortaleza())
   }
 }
+
+
+describe "Test de la parte 3" {
+  //Pacientes
+  const nicolas = new Resistente(edad=40, dolor=10,fortaleza=20)
+  const victoria = new Caprichoso(edad=30, dolor=10,fortaleza=40)
+  const julian = new Caprichoso(edad=20, dolor=54,fortaleza=50)
+  const zoe = new RapidaRecuperacion(edad=50, dolor=14,fortaleza=40)
+
+  //Aparatos
+  const magneto = new Magneto()
+  const bicicleta = new Bicicleta()
+  const minitramp = new Minitramp()
+  const bicicletaRoja = new Bicicleta(color="rojo")
+  const magnetoVerde = new Magneto(color="verde")
+
+  method initialize() {
+    nicolas.agregarVariosARutina([bicicleta, minitramp, bicicleta, magneto])
+    victoria.agregarVariosARutina([bicicleta, minitramp, bicicleta, magneto])
+    julian.agregarVariosARutina([bicicletaRoja, magnetoVerde, bicicleta])
+    zoe.agregarVariosARutina([bicicleta, minitramp, bicicleta, magneto])
+    rapidosDeRecuperacion.cantidadConfigurable(2)
+  }
+
+  test"Nicolás puede hacer la rutina que tiene asignada. Después de hacerla una vez, su nivel de dolor baja a 1.8, y su fortaleza sube a 34."{
+    assert.that(nicolas.puedeHacerLaRutina())
+    nicolas.realizarSesionCompleta()
+    assert.equals(1.8, nicolas.dolor())
+    assert.equals(34, nicolas.fortaleza())
+  }
+
+  test "Victoria no puede hacer la rutina que tiene asignada." {
+    assert.notThat(victoria.puedeHacerLaRutina())
+  }
+
+  test"Julian puede hacer la rutina que tiene asignada. Después de hacerla una vez, su nivel de dolor baja a 29.3, y su fortaleza sube a 62."{
+    assert.that(julian.puedeHacerLaRutina())
+    julian.realizarSesionCompleta()
+    assert.equals(29.3, julian.dolor())
+    assert.equals(62, julian.fortaleza())
+  }
+
+  test" Después de asignar a 2 el valor de decremento de dolor para pacientes de rápida recuperación, puede hacer la rutina que tiene asignada. Después de hacerla una vez, su nivel de dolor baja a 3.4, y su fortaleza sube a 51."{
+    assert.that(zoe.puedeHacerLaRutina())
+    nicolas.realizarSesionCompleta()
+    assert.equals(3.4, zoe.dolor())
+    assert.equals(51, zoe.fortaleza())
+  }
+
+
+}v
