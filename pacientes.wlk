@@ -1,15 +1,27 @@
 class Paciente {
+ const aparatosRutina = []
   const property edad
   var property fortaleza
   var property dolor
 
-  //Metodos de consulta
-  //method edad() = edad
-  //method dolor() = dolor
-  //method fortaleza() = fortaleza
+  method puedeHacerLaRutina() = aparatosRutina.all({aparato => aparato.puedeSerUsado(self)})
 
   method usar(unAparato) {
     if(unAparato.puedeSerUsado(self)) unAparato.esUsadoPor(self)
+  }
+
+  method realizarSesionCompleta(){
+    if (self.puedeHacerLaRutina()) {
+      aparatosRutina.forEach({aparato => aparato.esUsadoPor(self)})
+    }
+  }
+
+  method agregarARutina(unAparato) {
+    aparatosRutina.add(unAparato)
+  }
+
+  method agregarVariosARutina(listaAparatos) {
+    aparatosRutina.addAll(listaAparatos)
   }
 }
 
