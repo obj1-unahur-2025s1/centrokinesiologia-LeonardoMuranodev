@@ -7,7 +7,7 @@ object kinesiologia {
   method menoresDeOchoAños() = pacientes.filter({p => p.edad() < 8})
   method cantNoPuedenCumplirConSuSesion() = pacientes.count({p => not p.puedeHacerLaRutina()})
   method estaEnOptimasCondiciones() = aparatos.all({a => ! a.necesitaMantenimiento()})
-  method estaComplicado() = self.cantQueNecesitanMantenimiento() < aparatos.size() / 2
+  method estaComplicado() = self.cantQueNecesitanMantenimiento() >= aparatos.size() / 2
   method cantQueNecesitanMantenimiento() = aparatos.count({a => a.necesitaMantenimiento()})
 
   //Metodos de indicacion
@@ -20,7 +20,7 @@ object kinesiologia {
   }
 
   method agregarAparatos(listaAparatos) {
-    pacientes.addAll(listaAparatos)
+    aparatos.addAll(listaAparatos)
   }
 }
 
@@ -69,8 +69,6 @@ class Caprichoso inherits Paciente {
 }
 
 class RapidaRecuperacion inherits Paciente {
-
-
   override method realizarSesionCompleta() {
     super()
     dolor -= rapidosDeRecuperacion.cantidadConfigurable()

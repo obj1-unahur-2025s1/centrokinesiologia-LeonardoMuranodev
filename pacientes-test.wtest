@@ -122,3 +122,63 @@ describe "Test de la parte 3" {
     assert.equals(51, zoe.fortaleza())
   }
 }
+
+describe "Test de la parte 4 y 5" {
+
+  //Pacientes
+  const nicolas = new Resistente(edad=40, dolor=80,fortaleza=20)
+  const victoria = new Caprichoso(edad=30, dolor=10,fortaleza=40)
+  const julian = new Caprichoso(edad=20, dolor=54,fortaleza=50)
+  const zoe = new RapidaRecuperacion(edad=50, dolor=14,fortaleza=40)
+  const chloe = new RapidaRecuperacion(edad=2, dolor=14,fortaleza=40)
+  const alicia = new Resistente(edad=7, dolor=22,fortaleza=20)
+
+  //Aparatos
+  const magneto = new Magneto(imantacion = 100)
+  const bicicleta = new Bicicleta()
+  const minitramp = new Minitramp()
+  const bicicletaRoja = new Bicicleta(color="rojo")
+  const magnetoVerde = new Magneto(color="verde", imantacion = 100)
+
+  method initialize() {
+    //Agregar a la Kinesiologia
+    kinesiologia.agregarAparatos([magneto, bicicleta, minitramp, bicicletaRoja, magnetoVerde])
+    kinesiologia.agregarPacientes([nicolas, victoria, julian, zoe, chloe, alicia])
+
+    //Rutina de los pacientes
+    nicolas.agregarVariosARutina([bicicleta, minitramp, bicicleta, magneto])
+    victoria.agregarVariosARutina([bicicleta, minitramp, bicicleta, magneto])
+    julian.agregarVariosARutina([bicicletaRoja, magnetoVerde, bicicleta])
+    zoe.agregarVariosARutina([bicicleta, minitramp, bicicleta, magneto])
+    chloe.agregarVariosARutina([bicicleta, minitramp, bicicleta, magneto])
+    alicia.agregarVariosARutina([bicicleta, minitramp, bicicleta, magneto])
+
+    //mejora de los rapidos de recuperacion
+    rapidosDeRecuperacion.cantidadConfigurable(2)
+
+    nicolas.usar(magneto)
+    nicolas.usar(magnetoVerde)
+    (0..10).forEach({n => nicolas.usar(bicicleta)})
+  }
+
+  test "Los colores de los aparatos de la Kinesiologia son rojo, verde y blanco" {
+    assert.equals(#{"blanco", "rojo", "verde"}, kinesiologia.coloresDeAparatosSinRepetidos())
+  }
+
+  test "Los pacientes menores a 8 años son chloe y alicia" {
+    assert.equals([chloe, alicia], kinesiologia.menoresDeOchoAños())
+  }
+
+  test "La cantidad de pacientes que no pueden realizar su rutina son 4, victoria, chloe, zoe y alicia" {
+    assert.equals(4, kinesiologia.cantNoPuedenCumplirConSuSesion())
+  }
+
+  test "Esta complicado ya que el magneto, el magnetoverde y la bicicleta necesitan mantenimiento" {
+    assert.that(kinesiologia.estaComplicado())
+  }
+
+  test "Luego de una visita al tecnico, esta en optimas condiciones" {
+    kinesiologia.visitaAlTecnico()
+    assert.that(kinesiologia.estaEnOptimasCondiciones())
+  }
+}
