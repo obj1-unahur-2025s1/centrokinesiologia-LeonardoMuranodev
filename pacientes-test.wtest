@@ -117,10 +117,8 @@ describe "Test de la parte 3" {
 
   test" Después de asignar a 2 el valor de decremento de dolor para pacientes de rápida recuperación, puede hacer la rutina que tiene asignada. Después de hacerla una vez, su nivel de dolor baja a 3.4, y su fortaleza sube a 51."{
     assert.that(zoe.puedeHacerLaRutina())
-    nicolas.realizarSesionCompleta()
+    zoe.realizarSesionCompleta()
     assert.equals(3.4, zoe.dolor())
     assert.equals(51, zoe.fortaleza())
   }
-
-
-}v
+}

@@ -1,3 +1,22 @@
+object kinesiologia {
+  const pacientes = []
+  const aparatos = []
+
+  //Metodos de consulta
+  method coloresDeAparatosSinRepetidos() = aparatos.map({a => a.color()}).asSet()
+  method menoresDeOchoAños() = pacientes.filter({p => p.edad() < 8})
+  method cantNoPuedenCumplirConSuSesion() = pacientes.count({p => not p.puedeHacerLaRutina()})
+
+  //Metodos de indicacion
+  method agregarPacientes(listaPacientes) {
+    pacientes.addAll(listaPacientes)
+  }
+
+  method agregarAparatos(listaAparatos) {
+    pacientes.addAll(listaAparatos)
+  }
+}
+
 class Paciente {
   const aparatosRutina = []
   const property edad
